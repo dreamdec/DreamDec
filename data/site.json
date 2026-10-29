@@ -1,0 +1,18 @@
+{
+  "name": "DreamDec",
+  "tagline": "Small-space decor that a renter can actually install",
+  "description": "DreamDec picks and compares small-space home products for renters: damage-free storage, compact desks and no-wire lighting. Every choice is screened against published specs and owner reviews, never paid for. We may earn a commission when you buy through our links.",
+  "baseUrl": "https://dreamdec.pages.dev",
+  "amazonTag": "dreamdec-20",
+  "disclosure": "As an Amazon Associate I earn from qualifying purchases.",
+  "disclosureShort": "Contains Amazon affiliate links — we may earn a commission at no extra cost to you.",
+  "contactEmail": "urdreamdec@gmail.com",
+  "primaryLocale": "US",
+  "locales": [
+    "US",
+    "UK",
+    "CA",
+    "AU"
+  ],
+  "oneLinkNote": "US links only for now. Enable Amazon OneLink in the Associates dashboard after approval to monetise UK/CA/AU visitors from the same pages."
+}

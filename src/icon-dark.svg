@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="DreamDec">
+  <rect width="512" height="512" rx="112" fill="#211d18"/>
+  <rect x="174" y="112" width="64" height="288" rx="32" fill="#fbf8f3"/>
+  <path d="M215 118a139 139 0 0 1 0 276 190 190 0 0 0 0-276z" fill="#fbf8f3"/>
+</svg>

@@ -1,0 +1,52 @@
+{
+  "pages": [
+    {
+      "slug": "about",
+      "title": "About DreamDec",
+      "metaDescription": "Why DreamDec only covers small, rented spaces and how we pick the products we rank.",
+      "body": [
+        "DreamDec exists because most home-decor advice assumes you own your home. It assumes you can drill into the wall, swap out the light fittings, put a bed frame where it looks best and live with the marks when you move out.",
+        "We only cover spaces where none of that is true: a rented bedroom, a corner of a shared flat, a studio where the desk has to fold away at night. Every product we rank has to satisfy two things — it solves a real space problem, and it can be removed without damaging the wall or the deposit.",
+        "We publish short lists of one product type at a time, usually five to eight items, because comparing eight under-bed drawers against each other is useful and comparing a lamp against a shelf against a rug is not. The constraints we screen against are printed at the top of every guide, so you can check our work rather than take it on trust.",
+        "One thing we are honest about: we do not buy every product and film ourselves using it. We read the published load ratings, the dimensions, the warranty, and the complaints that repeat across hundreds of owner reviews, and we reject anything that fails on those. Where a claim cannot be verified from the listing, the guide says so instead of guessing.",
+        "We earn a commission when you buy through our Amazon links, at no extra cost to you. It does not change what we recommend: if a product fails the constraints above it does not make the list, commission or not."
+      ]
+    },
+    {
+      "slug": "disclosure",
+      "title": "Affiliate Disclosure",
+      "metaDescription": "How DreamDec earns money and what that means for the links on this site.",
+      "body": [
+        "As an Amazon Associate I earn from qualifying purchases.",
+        "DreamDec is reader-supported. Some links on this site go to Amazon, and if you buy something through one of them we may receive a commission. You pay the same price either way.",
+        "Every page that contains an Amazon link carries this disclosure on the page itself, not only in the footer. This includes each guide, each product page, and the home page.",
+        "We do not accept payment for a placement on a list, we do not accept free products in exchange for a positive write-up, and we do not let commission rates decide what makes the shortlist. If we change any of that, this page will say so.",
+        "On Pinterest and other social platforms, pins that point here are commercial content. We label them as affiliate links at the point of posting."
+      ]
+    },
+    {
+      "slug": "privacy",
+      "title": "Privacy Policy",
+      "metaDescription": "What DreamDec collects, which third parties are involved, and how to ask us to remove your data.",
+      "body": [
+        "DreamDec is a small independent site. We keep the data we collect to the minimum needed to run it.",
+        "What we collect: if you email us, we keep your message and your address so we can reply. We do not run accounts, comment forms, or newsletters at the moment.",
+        "Analytics: we use privacy-conscious, aggregate analytics that counts visits rather than identifying visitors. No personal profile is built and no advertising trackers are placed on our pages.",
+        "When you click an Amazon link you leave this site. Amazon sets its own cookies and handles your data under its own privacy notice, which we do not control. Affiliate links carry a tracking identifier that lets Amazon tell us which site a purchase came from.",
+        "Hosting: this site is served as static files, which means there is no database of you sitting on our server.",
+        "Your rights: you can ask us to delete any email you have sent us, and you can opt out of interest-based advertising through the controls at youradchoices.com if you arrive here from an ad-supported platform. Reach us at the contact page.",
+        "If we add a third party that changes any of this, this page gets updated before it goes live."
+      ]
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "metaDescription": "Ask DreamDec a question about a product, a correction, or a partnership.",
+      "body": [
+        "Questions about a recommendation, a correction to something we published, or a report that a link is broken: send it over and we will look.",
+        "We read everything, but replies can take a week.",
+        "If you think a product on one of our lists no longer meets the constraints we published, tell us which one and why. Those emails genuinely change the lists."
+      ]
+    }
+  ]
+}

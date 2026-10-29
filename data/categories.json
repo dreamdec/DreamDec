@@ -1,0 +1,70 @@
+{
+  "categories": [
+    {
+      "slug": "bedrooms",
+      "title": "Small & Renter-Friendly Bedrooms",
+      "nav": "Bedrooms",
+      "icon": "🛏️",
+      "live": true,
+      "blurb": "Storage and pieces that work in a bedroom you don't own and can't drill into.",
+      "amazonSearchUrl": null
+    },
+    {
+      "slug": "study",
+      "title": "Desk & Study Setups",
+      "nav": "Study",
+      "icon": "💻",
+      "live": true,
+      "blurb": "Compact desks, task lighting and organisation for a workspace squeezed into a corner.",
+      "amazonSearchUrl": null
+    },
+    {
+      "slug": "living",
+      "title": "Small Apartments & Living Spaces",
+      "icon": "🪴",
+      "live": false,
+      "blurb": "Coming soon.",
+      "amazonSearchUrl": null
+    },
+    {
+      "slug": "kitchen",
+      "title": "Small Kitchen Decor & Organisation",
+      "icon": "🍳",
+      "live": false,
+      "blurb": "Coming soon.",
+      "amazonSearchUrl": null
+    },
+    {
+      "slug": "laundry",
+      "title": "Tiny Laundry-Room Organisation",
+      "icon": "🧺",
+      "live": false,
+      "blurb": "Coming soon.",
+      "amazonSearchUrl": null
+    },
+    {
+      "slug": "reading-nooks",
+      "title": "Cozy Reading Nooks",
+      "icon": "📚",
+      "live": false,
+      "blurb": "Coming soon.",
+      "amazonSearchUrl": null
+    },
+    {
+      "slug": "balconies",
+      "title": "Small Balconies & Outdoor Spaces",
+      "icon": "🌿",
+      "live": false,
+      "blurb": "Coming soon.",
+      "amazonSearchUrl": null
+    },
+    {
+      "slug": "trends",
+      "title": "Emerging Home-Decor Trends",
+      "icon": "✨",
+      "live": false,
+      "blurb": "Coming soon.",
+      "amazonSearchUrl": null
+    }
+  ]
+}
