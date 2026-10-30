@@ -60,4 +60,15 @@ A slot with id `adhesive-floating-shelf-pair` publishes at `/p/adhesive-floating
 
 ## Deploying
 
-Nothing deploys automatically yet. When you have the Cloudflare account, `dist/` is the folder that gets published, and the deploy token goes in `.env` (see `.env.example`). Never put a password in a chat or in these files.
+Pushing to `main` deploys automatically: `.github/workflows/deploy.yml` runs `build.mjs`, then `check-links.mjs` (a broken internal link fails the run, so nothing is deployed), then uploads `dist/` to the `dreamdec` Cloudflare Pages project. Live at `https://dreamdec.pages.dev/`.
+
+One-time setup, done in GitHub because the token must never be committed — **Settings → Secrets and variables → Actions → New repository secret**, twice:
+
+| Name | Value |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | the same scoped Pages-edit token that is in your local `.env` |
+| `CLOUDFLARE_ACCOUNT_ID` | `97b2f06225cf02f8924a9544ebf6c45e` |
+
+The project's production branch is `main`, so those pushes update the live site directly instead of creating a preview URL.
+
+To deploy by hand — for example to ship a rebuild without a commit — run `npx wrangler pages deploy dist --project-name dreamdec` from this folder, or trigger it from **Actions → Deploy → Run workflow**.
