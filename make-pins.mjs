@@ -22,11 +22,12 @@ const EYEBROW = 'No-drill bedroom storage';
 // ("Cheapest way in") and the spec strings are table voice, and a caveat like
 // "no load figure stated" is editorial hedging that belongs on the page.
 // Nothing here asserts a load rating the article does not already state.
-// House style is the card layout: the room is the background and the product sits
-// in a white card popped over it. `layout: 'placed'` on a pin instead blends the
-// product straight into the scene with multiply, which looks better for the six
-// picks shot on white but reads as a pasted rectangle for the two whose listing
-// photos are themselves styled room scenes.
+// House style is the card layout: the room is the background and a white card
+// holding the product photo fills most of the frame, popped over it. Only the
+// headline band and a margin of room stay open. `layout: 'placed'` on a pin
+// instead blends the product straight into the scene with multiply, which looks
+// better for the six picks shot on white but reads as a pasted rectangle for the
+// two whose listing photos are themselves styled room scenes.
 const LAYOUT = 'card';
 
 // `place` is the cutout's top-left corner and its width, as percentages of the
@@ -185,8 +186,10 @@ function productPin(slot) {
       <div class="card">
         <div class="shot"><img src="${img}" alt=""></div>
         <div class="txt">
-          <p class="name display">${esc(name)}</p>
-          <p class="spec">${esc(pinSpec(slot.pick.spec))}</p>
+          <div class="left">
+            <p class="name display">${esc(name)}</p>
+            <p class="spec">${esc(pinSpec(slot.pick.spec))}</p>
+          </div>
           <span class="chip">${esc(chip)}</span>
         </div>
       </div>
@@ -220,16 +223,27 @@ const copyCss = () => `
 `;
 
 const CARD_CSS = `
+  /* The card is the pin: it takes every pixel the headline band does not need,
+     so the photo reads at thumb size in a Pinterest feed. min-height:0 lets the
+     flex children shrink instead of pushing the frame past 1500px.
+     Solid white, not translucent: the listing photos are shot on white, and any
+     see-through tint leaves their backdrop visible as a brighter block. */
   .card {
-    flex: 0 0 auto; margin-top: auto; background: rgba(255,255,255,.95); border: 2px solid var(--line);
-    border-radius: 26px; padding: 26px; display: flex; align-items: center; gap: 26px;
-    box-shadow: 0 18px 40px rgba(33,29,24,.14);
+    flex: 1 1 auto; min-height: 0; margin: 26px 0 0;
+    background: #fff; border: 2px solid var(--line);
+    border-radius: 30px; padding: 30px; display: flex; flex-direction: column;
+    box-shadow: 0 22px 54px rgba(33,29,24,.20);
   }
-  .shot { flex: 0 0 300px; width: 300px; height: 250px; display: flex; align-items: center; justify-content: center; }
+  .shot { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
   .shot img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-  .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px; }
-  .name { font-size: 36px; line-height: 1.16; font-weight: 600; letter-spacing: -.015em; }
-  .spec { font-size: 23px; line-height: 1.35; color: var(--clay-deep); font-weight: 600; }
+  .txt {
+    flex: 0 0 auto; margin-top: 24px; padding-top: 24px; border-top: 2px solid var(--line);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  }
+  .left { min-width: 0; display: flex; flex-direction: column; gap: 9px; }
+  .name { font-size: 41px; line-height: 1.14; font-weight: 600; letter-spacing: -.018em; }
+  .spec { font-size: 24px; line-height: 1.32; color: var(--clay-deep); font-weight: 600; }
+  .txt .chip { flex: 0 0 auto; align-self: flex-end; }
 `;
 
 function collagePin(slots) {
