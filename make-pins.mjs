@@ -22,37 +22,53 @@ const EYEBROW = 'No-drill bedroom storage';
 // ("Cheapest way in") and the spec strings are table voice, and a caveat like
 // "no load figure stated" is editorial hedging that belongs on the page.
 // Nothing here asserts a load rating the article does not already state.
+// `place` is the cutout's top-left corner and its width, as percentages of the
+// 1000x1500 frame. Tuned by eye against each scene: wall shelves sit on the bare
+// wall above the sideboard, the rack on the door face, the bed pieces at rail height.
+//
+// `layout: 'card'` is for the two picks whose Amazon photo is itself a lifestyle
+// shot rather than a product on white. multiply only removes white, so those paste
+// a visible rectangle of somebody else's bathroom onto our wall.
 const PINS = {
   'command-decor-metal-shelf': {
     name: 'Command Décor metal shelf', chip: 'Adhesive strips', scene: 'wall',
+    // The listing photo is packaging above the loose shelf; only the shelf belongs on a wall.
+    place: { l: 52, t: 30, w: 42, crop: { t: 60 } },
     line: 'A shelf that sticks, not screws', sub: 'Comes with the strips. Peels off without a mark.',
   },
   'yieach-acrylic-shelf-6-pack': {
     name: 'Yieach clear acrylic set', chip: 'Tape or screws', scene: 'wall',
+    place: { l: 6, t: 32, w: 60 },
     line: 'Six clear shelves that disappear', sub: 'See-through, so they vanish on a pale wall.',
   },
   'fayygyh-floating-shelf-pair': {
     name: 'FAYYGYH floating pair', chip: 'Adhesive tape', scene: 'wall',
+    place: { l: 56, t: 33, w: 40 },
     line: 'Two shelves. Tape only.', sub: 'The cheapest way into a wall shelf.',
   },
   'jarlink-over-door-organizer': {
     name: 'JARLINK over-door rack', chip: 'Hooks over door', scene: 'door',
+    // The listing shows two racks: one already mounted on a wood door, which would
+    // paste a brown rectangle onto ours, and one bare. Keep the bare one.
+    place: { l: 12, t: 16, w: 55, crop: { l: 62, r: 1 } },
     line: 'Storage that hangs on the door', sub: 'Uses the back of a door you already have.',
   },
   'tension-pole-shelf': {
-    name: 'Tension pole shelves', chip: 'No wall contact', scene: 'corner',
+    name: 'Tension pole shelves', chip: 'No wall contact', scene: 'corner', layout: 'card',
     line: 'Floor to ceiling, nothing drilled', sub: 'Wedged tight between floor and ceiling.',
   },
   'vasagle-ladder-shelf': {
     name: 'VASAGLE ladder shelf', chip: 'Leans + straps', scene: 'corner', eyebrow: 'Bedroom storage',
+    place: { l: 58, t: 30, w: 38 },
     line: 'The one you do have to anchor', sub: 'Leans like a ladder, straps into the wall.',
   },
   'loghot-bedside-caddy': {
     name: 'Loghot hanging caddy', chip: 'Hangs on rail', scene: 'bedside',
+    place: { l: 52, t: 54, w: 44, boost: 1.3 },
     line: 'Everything beside the bed', sub: 'Phone, meds, cables and remote in one pocket.',
   },
   'value-tree-clamp-shelf': {
-    name: 'Value Tree clamp shelf', chip: 'Clamps on rail', scene: 'bedside',
+    name: 'Value Tree clamp shelf', chip: 'Clamps on rail', scene: 'bedside', layout: 'card',
     line: 'Clamps on. No holes.', sub: 'Grips the bed rail instead of the wall.',
   },
 };
@@ -62,7 +78,7 @@ const PINS = {
 const pinSpec = (spec) => spec.replace(/\s*·\s*no load figure stated/i, '');
 
 const COLLAGE = {
-  line: '8 things that changed<br>my whole room',
+  line: '8 Damage-Free Wall Shelves<br>That Changed My Rental Room',
   sub: 'No drill for 7 of the 8.',
   scene: 'wall',
 };
@@ -84,13 +100,22 @@ const BASE_CSS = `
   }
   .pin { width: ${W}px; height: ${H}px; position: relative; display: flex; flex-direction: column; padding: 44px 44px 0; }
   .pin::before {
-    content: ''; position: absolute; inset: 0; z-index: -1;
+    content: ''; position: absolute; inset: 0; z-index: -2;
     background: var(--bg) center/cover no-repeat;
   }
   .scrim {
     position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(180deg, rgba(251,248,243,.94) 0%, rgba(251,248,243,.86) 34%, rgba(251,248,243,.3) 58%, rgba(251,248,243,0) 74%);
+    /* Two fades: the top one carries the headline, the bottom one keeps the
+       product name readable where the scene has a dark floor or rug. */
+    background: linear-gradient(180deg,
+      rgba(251,248,243,.94) 0%, rgba(251,248,243,.86) 34%, rgba(251,248,243,.3) 58%,
+      rgba(251,248,243,0) 74%, rgba(251,248,243,.55) 88%, rgba(251,248,243,.9) 100%);
   }
+  /* The product JPEGs have no alpha channel, so multiply is what drops their white
+     studio backdrop: white multiplied against a pale wall returns the wall. It also
+     means a clear acrylic shelf stays see-through, which is the whole point of it. */
+  .placed { position: absolute; z-index: 0; mix-blend-mode: multiply; display: block; height: auto; }
+  .copy, .caption, .foot { position: relative; z-index: 1; }
   .eyebrow {
     display: flex; align-items: center; gap: 14px;
     font: 700 20px/1 'Karla', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--clay);
@@ -129,42 +154,80 @@ function page(css, body) {
 }
 
 function productPin(slot) {
-  const { name, line, sub, chip, scene } = PINS[slot.id];
-  const body = `
-    <div class="pin" style="--bg:url('${sceneUrl(scene)}')">
-      <div class="scrim"></div>
+  const { name, line, sub, chip, scene, place, layout } = PINS[slot.id];
+  const img = fileUrl(path.join(HERE, 'src', slot.pick.image));
+  const clip = place?.crop
+    ? `clip-path: inset(${place.crop.t ?? 0}% ${place.crop.r ?? 0}% ${place.crop.b ?? 0}% ${place.crop.l ?? 0}%);`
+    : '';
+  // Some listing photos are shot on pale grey, not white, and multiply can only
+  // darken — that leaves a visible rectangle. Pushing the backdrop over white
+  // first makes it vanish; the amount is tuned per pin because it also lifts the
+  // product itself.
+  const boost = place?.boost ?? 1.12;
+  const copy = `
       <div class="eyebrow">${esc(PINS[slot.id].eyebrow ?? EYEBROW)}<span class="rule"></span></div>
       <h1 class="display">${esc(line)}</h1>
-      <p class="sub">${esc(sub)}</p>
+      <p class="sub">${esc(sub)}</p>`;
+  const foot = `
+      <div class="foot">
+        <div class="mark"><img src="${fileUrl(path.join(HERE, 'src', 'icon.svg'))}" alt=""><span class="word display">Dream<span>Dec</span></span></div>
+        <p class="site"><b>dreamdec.pages.dev</b>Contains an Amazon affiliate link</p>
+      </div>`;
+
+  if (layout === 'card') {
+    const body = `
+    <div class="pin" style="--bg:url('${sceneUrl(scene)}')">
+      <div class="scrim"></div>
+      <div class="copy">${copy}</div>
       <div class="card">
-        <div class="shot"><img src="${fileUrl(path.join(HERE, 'src', slot.pick.image))}" alt=""></div>
+        <div class="shot"><img src="${img}" alt=""></div>
         <div class="txt">
           <p class="name display">${esc(name)}</p>
           <p class="spec">${esc(pinSpec(slot.pick.spec))}</p>
           <span class="chip">${esc(chip)}</span>
         </div>
       </div>
-      <div class="foot">
-        <div class="mark"><img src="${fileUrl(path.join(HERE, 'src', 'icon.svg'))}" alt=""><span class="word display">Dream<span>Dec</span></span></div>
-        <p class="site"><b>dreamdec.pages.dev</b>Contains an Amazon affiliate link</p>
-      </div>
+      ${foot}
     </div>`;
-  const css = `
-    h1 { font-size: 76px; line-height: 1.05; letter-spacing: -.025em; margin: 20px 0 0; max-width: 15ch; }
-    .sub { margin: 18px 0 0; max-width: 26ch; font-size: 29px; line-height: 1.35; font-weight: 400; color: var(--ink-soft); }
-    .card {
-      flex: 0 0 auto; margin-top: auto; background: rgba(255,255,255,.95); border: 2px solid var(--line);
-      border-radius: 26px; padding: 26px; display: flex; align-items: center; gap: 26px;
-      box-shadow: 0 18px 40px rgba(33,29,24,.14);
-    }
-    .shot { flex: 0 0 300px; width: 300px; height: 250px; display: flex; align-items: center; justify-content: center; }
-    .shot img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-    .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px; }
-    .name { font-size: 36px; line-height: 1.16; font-weight: 600; letter-spacing: -.015em; }
-    .spec { font-size: 23px; line-height: 1.35; color: var(--clay-deep); font-weight: 600; }
-  `;
-  return page(css, body);
+    return page(CARD_CSS + copyCss(), body);
+  }
+
+  const body = `
+    <div class="pin" style="--bg:url('${sceneUrl(scene)}')">
+      <div class="scrim"></div>
+      <img class="placed" src="${img}" alt="" style="left:${place.l}%;top:${place.t}%;width:${place.w}%;filter:brightness(${boost}) contrast(1.05);${clip}">
+      <div class="copy">${copy}</div>
+      <div class="caption">
+        <p class="name display">${esc(name)}</p>
+        <span class="chip">${esc(chip)}</span>
+      </div>
+      ${foot}
+    </div>`;
+  return page(copyCss() + `
+    .caption { flex: 0 0 auto; margin-top: auto; display: flex; align-items: center; gap: 18px; }
+    .name { font-size: 34px; line-height: 1.1; font-weight: 600; letter-spacing: -.015em;
+            text-shadow: 0 2px 14px rgba(251,248,243,.98), 0 0 34px rgba(251,248,243,.95), 0 1px 0 rgba(251,248,243,.9); }
+  `, body);
 }
+
+const copyCss = () => `
+  .copy { flex: 0 0 auto; }
+  h1 { font-size: 76px; line-height: 1.05; letter-spacing: -.025em; margin: 20px 0 0; max-width: 15ch; }
+  .sub { margin: 18px 0 0; max-width: 26ch; font-size: 29px; line-height: 1.35; font-weight: 400; color: var(--ink-soft); }
+`;
+
+const CARD_CSS = `
+  .card {
+    flex: 0 0 auto; margin-top: auto; background: rgba(255,255,255,.95); border: 2px solid var(--line);
+    border-radius: 26px; padding: 26px; display: flex; align-items: center; gap: 26px;
+    box-shadow: 0 18px 40px rgba(33,29,24,.14);
+  }
+  .shot { flex: 0 0 300px; width: 300px; height: 250px; display: flex; align-items: center; justify-content: center; }
+  .shot img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px; }
+  .name { font-size: 36px; line-height: 1.16; font-weight: 600; letter-spacing: -.015em; }
+  .spec { font-size: 23px; line-height: 1.35; color: var(--clay-deep); font-weight: 600; }
+`;
 
 function collagePin(slots) {
   const tiles = slots.map((s) => `
@@ -188,7 +251,7 @@ function collagePin(slots) {
       </div>
     </div>`;
   const css = `
-    h1 { font-size: 68px; line-height: 1.04; letter-spacing: -.025em; margin: 16px 0 0; }
+    h1 { font-size: 54px; line-height: 1.06; letter-spacing: -.022em; margin: 14px 0 0; }
     .sub { margin: 12px 0 20px; font-size: 25px; font-weight: 700; color: var(--clay-deep); letter-spacing: .01em; }
     .grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); gap: 14px; min-height: 0; }
     .cell { background: rgba(255,255,255,.95); border: 2px solid var(--line); border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 12px; min-height: 0; }
