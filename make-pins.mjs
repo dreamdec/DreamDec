@@ -22,13 +22,16 @@ const EYEBROW = 'No-drill bedroom storage';
 // ("Cheapest way in") and the spec strings are table voice, and a caveat like
 // "no load figure stated" is editorial hedging that belongs on the page.
 // Nothing here asserts a load rating the article does not already state.
+// House style is the card layout: the room is the background and the product sits
+// in a white card popped over it. `layout: 'placed'` on a pin instead blends the
+// product straight into the scene with multiply, which looks better for the six
+// picks shot on white but reads as a pasted rectangle for the two whose listing
+// photos are themselves styled room scenes.
+const LAYOUT = 'card';
+
 // `place` is the cutout's top-left corner and its width, as percentages of the
 // 1000x1500 frame. Tuned by eye against each scene: wall shelves sit on the bare
 // wall above the sideboard, the rack on the door face, the bed pieces at rail height.
-//
-// `layout: 'card'` is for the two picks whose Amazon photo is itself a lifestyle
-// shot rather than a product on white. multiply only removes white, so those paste
-// a visible rectangle of somebody else's bathroom onto our wall.
 const PINS = {
   'command-decor-metal-shelf': {
     name: 'Command Décor metal shelf', chip: 'Adhesive strips', scene: 'wall',
@@ -54,7 +57,7 @@ const PINS = {
     line: 'Storage that hangs on the door', sub: 'Uses the back of a door you already have.',
   },
   'tension-pole-shelf': {
-    name: 'Tension pole shelves', chip: 'No wall contact', scene: 'corner', layout: 'card',
+    name: 'Tension pole shelves', chip: 'No wall contact', scene: 'corner',
     line: 'Floor to ceiling, nothing drilled', sub: 'Wedged tight between floor and ceiling.',
   },
   'vasagle-ladder-shelf': {
@@ -68,7 +71,7 @@ const PINS = {
     line: 'Everything beside the bed', sub: 'Phone, meds, cables and remote in one pocket.',
   },
   'value-tree-clamp-shelf': {
-    name: 'Value Tree clamp shelf', chip: 'Clamps on rail', scene: 'bedside', layout: 'card',
+    name: 'Value Tree clamp shelf', chip: 'Clamps on rail', scene: 'bedside',
     line: 'Clamps on. No holes.', sub: 'Grips the bed rail instead of the wall.',
   },
 };
@@ -174,7 +177,7 @@ function productPin(slot) {
         <p class="site"><b>dreamdec.pages.dev</b>Contains an Amazon affiliate link</p>
       </div>`;
 
-  if (layout === 'card') {
+  if ((layout ?? LAYOUT) === 'card') {
     const body = `
     <div class="pin" style="--bg:url('${sceneUrl(scene)}')">
       <div class="scrim"></div>
