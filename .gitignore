@@ -4,3 +4,12 @@ preview/
 .wrangler/
 node_modules/
 .DS_Store
+
+# Drop new product photos here. They are moved into src/ once a pin is built
+# from them, so nothing in here should ever be committed.
+inbox/
+
+# A copy of src/pins for hand-upload. Regenerate with:
+#   node make-pins.mjs && cp src/pins/*.png pinterest-pins/
+# Not committed - it duplicates 11 MB of images already in src/pins.
+pinterest-pins/
