@@ -41,6 +41,19 @@ async function exchange(params, credentials) {
   return json;
 }
 
+// Most v5 payloads arrive wrapped in { code, data }; the OAuth body came back flat.
+// Accept either rather than guessing, or the token is silently written as undefined.
+const payload = (json) => (json?.data?.access_token ? json.data : json);
+
+// The authorization-code response carries expires_in (seconds), not an absolute
+// timestamp, and the expiry is what tells the publisher to warn before the token
+// goes stale. Turn it into a date here so every consumer can compare it directly.
+function expiresAt(t) {
+  if (t.access_token_expires_at) return t.access_token_expires_at;
+  const secs = Number(t.expires_in);
+  return secs ? new Date(Date.now() + secs * 1000).toISOString() : '';
+}
+
 function waitForCode() {
   return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
@@ -72,32 +85,47 @@ if (!id || !secret) {
 }
 
 const flagCode = process.argv.find((a) => a.startsWith('--code='))?.slice(7);
+const isRefresh = process.argv.includes('--refresh');
 
-const authorizeUrl = `https://www.pinterest.com/oauth/?${new URLSearchParams({
-  client_id: id,
-  redirect_uri: REDIRECT_URI,
-  response_type: 'code',
-  scope: SCOPES,
-})}`;
+let token;
+if (isRefresh) {
+  // Pinterest rotates the refresh token on every refresh, so this only ever runs
+  // locally, where .env can hold the new pair. CI cannot write repository secrets.
+  if (!env.PINTEREST_REFRESH_TOKEN) {
+    console.error('No PINTEREST_REFRESH_TOKEN in .env - run `node pinterest-auth.mjs` without flags first.');
+    process.exit(1);
+  }
+  console.log('\nRefreshing the access token with the stored refresh token ...');
+  token = await exchange({ refresh_token: env.PINTEREST_REFRESH_TOKEN, grant_type: 'refresh_token' }, { id, secret });
+} else {
+  const authorizeUrl = `https://www.pinterest.com/oauth/?${new URLSearchParams({
+    client_id: id,
+    redirect_uri: REDIRECT_URI,
+    response_type: 'code',
+    scope: SCOPES,
+  })}`;
 
-console.log('\nOpen this in a browser where you are already signed in to Pinterest:\n');
-console.log(authorizeUrl);
-console.log(`\nApprove the request. If the browser shows "redirect refused", copy the full address bar URL`);
-console.log(`and re-run as:  node pinterest-auth.mjs --code=<the code= value>\n`);
+  console.log('\nOpen this in a browser where you are already signed in to Pinterest:\n');
+  console.log(authorizeUrl);
+  console.log(`\nApprove the request. If the browser shows "redirect refused", copy the full address bar URL`);
+  console.log(`and re-run as:  node pinterest-auth.mjs --code=<the code= value>\n`);
 
-const code = flagCode || (await waitForCode());
+  const code = flagCode || (await waitForCode());
+  token = await exchange({ code, grant_type: 'authorization_code', redirect_uri: REDIRECT_URI }, { id, secret });
+}
 
-const token = await exchange({ code, grant_type: 'authorization_code', redirect_uri: REDIRECT_URI }, { id, secret });
+const t = payload(token);
+if (!t.access_token) throw new Error(`Pinterest returned no access_token: ${JSON.stringify(token).slice(0, 300)}`);
 
 writeEnv({
-  PINTEREST_ACCESS_TOKEN: token.access_token,
-  PINTEREST_REFRESH_TOKEN: token.refresh_token ?? '',
-  PINTEREST_TOKEN_EXPIRES_AT: token.access_token_expires_at ?? '',
+  PINTEREST_ACCESS_TOKEN: t.access_token,
+  PINTEREST_REFRESH_TOKEN: t.refresh_token ?? env.PINTEREST_REFRESH_TOKEN ?? '',
+  PINTEREST_TOKEN_EXPIRES_AT: expiresAt(t),
   PINTEREST_CLIENT_ID: id,
   PINTEREST_CLIENT_SECRET: secret,
 });
 
-console.log(`Connected as @${token.user?.username ?? '(unknown)'}.`);
-console.log(`Scopes granted: ${token.scope ?? SCOPES}`);
-if (token.access_token_expires_at) console.log(`Access token expires: ${token.access_token_expires_at}`);
+console.log(`Connected as @${t.user?.username ?? '(unknown)'}.`);
+console.log(`Scopes granted: ${t.scope ?? SCOPES}`);
+console.log(`Access token expires: ${expiresAt(t) || 'unknown - Pinterest returned no expiry'}`);
 console.log('Tokens were written to E:\\DreamDec\\.env (git-ignored, never sent anywhere).');

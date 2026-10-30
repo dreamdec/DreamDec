@@ -43,7 +43,9 @@ async function api(pathname, init = {}) {
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) {
-    throw new Error(`Pinterest ${init.method || 'GET'} ${pathname} -> ${res.status}: ${JSON.stringify(body.code ?? body.message ?? body).slice(0, 300)}`);
+    // Print the whole body: Pinterest puts the useful text in `message` and the
+    // generic `code: 1` on the same object, so showing only one hides the reason.
+    throw new Error(`Pinterest ${init.method || 'GET'} ${pathname} -> ${res.status}: ${JSON.stringify(body).slice(0, 400)}`);
   }
   return body;
 }

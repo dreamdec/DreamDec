@@ -37,6 +37,9 @@ jobs:
         env:
           PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
           PINTEREST_BOARD_ID: ${{ secrets.PINTEREST_BOARD_ID }}
+          # Without this the expiry warning in publish-pins.mjs can only fire
+          # locally, and the schedule would just start failing with a 401.
+          PINTEREST_TOKEN_EXPIRES_AT: ${{ secrets.PINTEREST_TOKEN_EXPIRES_AT }}
           COUNT: ${{ inputs.count || '1' }}
         run: |
           if [ -z "$PINTEREST_ACCESS_TOKEN" ]; then

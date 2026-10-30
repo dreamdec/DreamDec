@@ -3,7 +3,7 @@
   "board": {
     "name": "Small Space Decor",
     "description": "Rent-safe storage and decor for small bedrooms. No drilling.",
-    "privacy": "public"
+    "privacy": "PUBLIC"
   },
   "pins": [
     {
