@@ -109,13 +109,6 @@ if (args.has('--lint')) {
   process.exit(0);
 }
 
-// Read-only: proves the token works and returns the handle whose public profile has to be
-// checked, because a pin that only the owner can see is worth nothing to this site.
-if (args.has('--whoami')) {
-  console.log(JSON.stringify(await api('/users/me'), null, 2));
-  process.exit(0);
-}
-
 const boardId = await resolveBoard();
 
 // Pinterest access tokens live ~30 days and refreshing rotates the refresh token,
