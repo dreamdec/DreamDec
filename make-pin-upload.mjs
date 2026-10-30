@@ -14,7 +14,6 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT_ROOT = path.join(HERE, 'pinterest-pins');
 const IMG_SRC = path.join(HERE, 'src', 'pins');
 const queue = JSON.parse(fs.readFileSync(path.join(HERE, 'data', 'pin-queue.json'), 'utf8'));
-const SITE = JSON.parse(fs.readFileSync(path.join(HERE, 'data', 'site.json'), 'utf8')).baseUrl.replace(/\/$/, '');
 
 const bad = [];
 for (const pin of queue.pins) {
@@ -32,16 +31,19 @@ if (bad.length) {
 // Pins group by the article they point at, so a second guide drops into this folder as a
 // second subfolder without anything here having to know about it. The fragment on a product
 // pin's link is the popup trigger, so it is stripped for the grouping.
+const articles = new Map(JSON.parse(fs.readFileSync(path.join(HERE, 'data', 'articles.json'), 'utf8')).articles
+  .map((a) => [a.slug, a]));
+
 const groups = new Map();
 for (const pin of queue.pins) {
   const pathname = new URL(pin.link).pathname.replace(/\/+$/, '');
-  const folder = pathname.split('/').filter(Boolean).pop();
+  const slug = pathname.split('/').filter(Boolean).pop();
+  // Folders are named for the article, because they get opened by hand: `pinFolder` in
+  // data/articles.json wins, the URL slug is the fallback.
+  const folder = articles.get(slug)?.pinFolder ?? slug;
   if (!groups.has(folder)) groups.set(folder, { pathname, pins: [] });
   groups.get(folder).pins.push(pin);
 }
-
-const cell = (v) => `"${String(v).replace(/"/g, '""')}"`;
-const header = ['Title', 'Description', 'Link', 'Media URL', 'Pinterest board'];
 
 // Leftover flat output from when the whole queue was one article loose in this folder.
 for (const stale of ['pin-text.txt', 'bulk-upload.csv']) fs.rmSync(path.join(OUT_ROOT, stale), { force: true });
@@ -52,10 +54,6 @@ for (const [folder, group] of groups) {
   const dir = path.join(OUT_ROOT, folder);
   fs.mkdirSync(dir, { recursive: true });
   for (const pin of group.pins) fs.copyFileSync(path.join(IMG_SRC, pin.image), path.join(dir, pin.image));
-
-  fs.writeFileSync(path.join(dir, 'bulk-upload.csv'), [header.map(cell).join(','),
-    ...group.pins.map((p) => [p.title, p.note, p.link, `${SITE}/pins/${p.image}`, queue.board.name].map(cell).join(',')),
-  ].join('\r\n') + '\r\n');
 
   // The collage is the pin whose link has no fragment - it is the one that opens the article,
   // so it goes first and everything else follows.
@@ -87,7 +85,7 @@ ${blocks.join('\n\n')}
 `);
 
   total += ordered.length;
-  console.log(`pinterest-pins/${folder}/ - ${ordered.length} images + pin-text.txt + bulk-upload.csv`);
+  console.log(`pinterest-pins/${folder}/ - ${ordered.length} images + pin-text.txt`);
   for (const p of ordered) console.log(`  ${p.image.padEnd(36)} title ${String(p.title.length).padStart(3)}  description ${String(p.note.length).padStart(3)}`);
 }
 console.log(`\n${total} pins ready across ${groups.size} article folder(s).`);
