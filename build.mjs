@@ -388,6 +388,16 @@ for (const asset of fs.readdirSync(path.join(HERE, 'src'))) {
   if (/\.(svg|png|jpe?g)$/i.test(asset)) fs.copyFileSync(path.join(HERE, 'src', asset), path.join(DIST, asset));
 }
 
+// Pinterest's bulk uploader and the API both need a publicly fetchable image URL,
+// so the pin creatives are published alongside the site rather than kept local.
+const pinSrc = path.join(HERE, 'src', 'pins');
+if (fs.existsSync(pinSrc)) {
+  fs.mkdirSync(path.join(DIST, 'pins'), { recursive: true });
+  for (const pin of fs.readdirSync(pinSrc)) {
+    if (/\.png$/i.test(pin)) fs.copyFileSync(path.join(pinSrc, pin), path.join(DIST, 'pins', pin));
+  }
+}
+
 // Cloudflare Pages serves this with a real 404 status; without it, unknown paths
 // fall back to the home document at 200, which Google treats as a soft 404.
 if (site.baseUrl) {
