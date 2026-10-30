@@ -58,6 +58,7 @@ function amazonHref(url) {
 const up = (depth) => '../'.repeat(depth);
 const pad = (n) => String(n).padStart(2, '0');
 const filled = (p) => Boolean(p.pick?.amazonUrl);
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 function awardName(slot) {
   const raw = slot.draftHeading ?? '';
@@ -197,21 +198,21 @@ function pickModal(product, depth) {
 </dialog>`;
 }
 
+// Every cell has to stay on one line, so the pick shows the short name from the
+// heading, not the Amazon title - the full title is the card's H3 further down.
 function compareTable(article) {
   const rows = article.slots.map((slot, i) => {
-    const p = productBy[slot.id];
     const { award, name } = awardName(slot);
     return `      <tr>
-        <td>${pad(i + 1)}</td>
-        <td class="award" data-label="Pick">${p.pick?.title ? esc(p.pick.title) : esc(name)}</td>
-        <td data-label="Best for">${esc(award)}</td>
-        <td data-label="How it fixes">${esc(slot.mount ?? '—')}</td>
+        <td class="c-num">${pad(i + 1)}</td>
+        <td class="c-pick"><a href="#${esc(slot.id)}">${esc(cap(name))}</a></td>
+        <td class="c-why">${esc(award)}</td>
       </tr>`;
   }).join('\n');
   return `<div class="compare">
   <table>
     <caption class="sr-only">All picks in this guide</caption>
-    <thead><tr><th scope="col">#</th><th scope="col">Pick</th><th scope="col">Best for</th><th scope="col">How it fixes</th></tr></thead>
+    <thead><tr><th scope="col">#</th><th scope="col">Pick</th><th scope="col">Best for</th></tr></thead>
     <tbody>
 ${rows}
     </tbody>

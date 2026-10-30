@@ -221,21 +221,29 @@ h1.guide-title { max-width: 26ch; }
   border-left: 2px solid var(--sage); border-bottom: 2px solid var(--sage); transform: rotate(-45deg);
 }
 
-/* ---------- compare table ---------- */
-.compare { margin: 8px 0 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-m); background: var(--card); }
+/* ---------- compare table ----------
+   One line per pick at every width: fixed columns, nowrap, ellipsis as the
+   safety net so an over-long cell can never stretch or wrap the row. */
+.compare { margin: 8px 0 40px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-m); background: var(--card); }
 .compare table { width: 100%; border-collapse: collapse; font-size: .92rem; table-layout: fixed; }
-.compare th:nth-child(1), .compare td:nth-child(1) { width: 10%; white-space: nowrap; padding-right: 4px; }
-.compare th:nth-child(2), .compare td:nth-child(2) { width: 40%; }
-.compare th:nth-child(3), .compare td:nth-child(3) { width: 30%; }
-.compare th:nth-child(4), .compare td:nth-child(4) { width: 20%; }
+.compare th:nth-child(1), .compare td:nth-child(1) { width: 58px; }
+.compare th:nth-child(2), .compare td:nth-child(2) { width: 54%; }
+.compare th:nth-child(3), .compare td:nth-child(3) { width: 46%; }
 .compare th { 
   text-align: left; font: 600 .74rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em;
-  color: var(--muted); padding: 14px 16px; background: var(--paper-2); border-bottom: 1px solid var(--line);
+  color: var(--muted); padding: 12px 16px; background: var(--paper-2); border-bottom: 1px solid var(--line);
+  white-space: nowrap;
 }
-.compare td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: break-word; }
+.compare td {
+  padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: middle;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .compare tr:last-child td { border-bottom: 0; }
 .compare tbody tr:hover { background: #fdfbf7; }
-.compare .award { font-family: var(--display); font-weight: 600; }
+.compare .c-num { color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.compare .c-pick a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.compare .c-pick a:hover { color: var(--clay-deep); text-decoration: underline; }
+.compare .c-why { color: var(--muted); }
 
 /* ---------- picks ---------- */
 .pick {
@@ -383,27 +391,31 @@ h1.guide-title { max-width: 26ch; }
   .lede p:first-of-type::first-letter { font-size: 2.8em; }
   .site-footer .cols { grid-template-columns: 1fr; }
 
-  /* the compare table becomes one card per pick - four fixed columns cannot
-     hold words like "Tension" at phone width without breaking them mid-word */
+  /* each pick is a card of its own at phone width: number and short name share
+     one line, the "best for" note sits under it, nothing wraps */
   .compare { border: 0; background: none; border-radius: 0; overflow: visible; margin-bottom: 28px; }
   .compare thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .compare table, .compare tbody { display: block; width: 100%; table-layout: auto; }
+  .compare table, .compare tbody { display: block; width: 100%; }
   .compare tbody tr {
-    display: block; background: var(--card); border: 1px solid var(--line);
-    border-radius: var(--r-m); box-shadow: var(--shadow-s); padding: 10px 0 12px; margin-bottom: 10px;
+    display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 8px; align-items: baseline;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--r-s); box-shadow: var(--shadow-s); padding: 9px 12px; margin-bottom: 8px;
   }
   .compare tbody tr:last-child { margin-bottom: 0; }
   .compare tbody tr:hover { background: var(--card); }
-  .compare td, .compare td:nth-child(1), .compare td:nth-child(2), .compare td:nth-child(3), .compare td:nth-child(4) {
-    display: block; width: auto; padding: 3px 16px; border: 0; overflow-wrap: normal;
+  .compare td, .compare td:nth-child(1), .compare td:nth-child(2), .compare td:nth-child(3) {
+    display: block; width: auto; padding: 0; border: 0;
   }
-  .compare td::before {
-    content: attr(data-label); display: block; font: 600 .68rem/1.4 var(--body); text-transform: uppercase;
-    letter-spacing: .09em; color: var(--muted); margin: 6px 0 1px;
-  }
-  .compare td:not([data-label])::before, .compare .award::before { content: none; }
-  .compare td:first-child { padding-bottom: 2px; color: var(--clay-deep); font-weight: 700; }
-  .compare .award { font-size: 1.06rem; margin-bottom: 2px; }
+  .compare .c-num { grid-column: 1; grid-row: 1; font-size: .82rem; }
+  .compare .c-pick { grid-column: 2; grid-row: 1; font-size: .95rem; }
+  .compare .c-why { grid-column: 2; grid-row: 2; font-size: .78rem; }
+}
+/* the smallest phones in the wild are 320px wide; the long pick names only fit
+   there with the type pulled back a step */
+@media (max-width: 360px) {
+  .compare tbody tr { grid-template-columns: 24px minmax(0, 1fr); column-gap: 6px; padding: 8px 10px; }
+  .compare .c-pick { font-size: .88rem; }
+  .compare .c-why { font-size: .72rem; }
 }
 
 /* ---------- product popup ----------
