@@ -49,7 +49,9 @@ async function api(pathname, init = {}) {
 }
 
 const queue = JSON.parse(fs.readFileSync(path.join(HERE, 'data', 'pin-queue.json'), 'utf8'));
-const SITE = 'https://dreamdec.pages.dev';
+// Same source the CSV generator uses, so a hand-uploaded row and an API-posted pin
+// can never end up pointing at different origins.
+const SITE = JSON.parse(fs.readFileSync(path.join(HERE, 'data', 'site.json'), 'utf8')).baseUrl.replace(/\/$/, '');
 
 // A pin is "already posted" when the board holds a pin pointing at the same URL.
 // Matching the link rather than the image survives a re-render of the creative.

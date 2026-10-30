@@ -405,3 +405,41 @@ h1.guide-title { max-width: 26ch; }
   .compare td:first-child { padding-bottom: 2px; color: var(--clay-deep); font-weight: 700; }
   .compare .award { font-size: 1.06rem; margin-bottom: 2px; }
 }
+
+/* ---------- product popup ----------
+   Opened by a pin link that lands on /<category>/<guide>/#<pick-id>. The dialog is
+   the whole point of that visit, so it covers the article rather than sitting in it.
+   Two columns from 760px up: a stacked popup puts Shop on Amazon below the fold,
+   which is the one button the pin exists to get clicked. */
+body:has(dialog.pick-pop[open]) { overflow: hidden; }
+dialog.pick-pop {
+  position: fixed; inset: 0; margin: auto; width: min(900px, calc(100% - 32px));
+  max-height: calc(100dvh - 40px); overflow: auto; padding: 0; border: 1px solid var(--line);
+  border-radius: var(--r-l); background: var(--card); color: var(--ink);
+  box-shadow: 0 40px 90px -30px rgba(33, 29, 24, .55);
+}
+dialog.pick-pop::backdrop { background: rgba(33, 29, 24, .58); backdrop-filter: blur(3px); }
+/* [open] on the display rule: an author `display` on dialog would beat the UA's
+   display:none and leave all eight popups printed down the article. */
+dialog.pick-pop[open] { display: grid; grid-template-columns: 1fr; }
+.pick-pop .pop-figure { overflow: hidden; background: var(--paper-2); border-bottom: 1px solid var(--line); }
+.pick-pop .pop-figure img { width: 100%; height: 100%; min-height: 200px; max-height: 42vh; object-fit: contain; padding: 16px; }
+.pick-pop .pop-body { padding: clamp(20px, 4vw, 32px); }
+.pick-pop h2 { font-family: var(--display); margin: 0 0 .35em; font-size: clamp(1.35rem, 4vw, 1.85rem); letter-spacing: -.02em; }
+.pick-pop .spec-line { color: var(--clay-deep); font-weight: 600; font-size: .92rem; margin: 0 0 14px; }
+.pick-pop .why { font-size: .95rem; }
+.pick-pop .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.pick-pop .pop-more::after { content: "↓"; }
+.pick-pop .pop-fine { margin: 16px 0 0; font-size: .76rem; color: var(--muted); }
+.pop-close {
+  position: absolute; top: 12px; right: 12px; z-index: 1; width: 40px; height: 40px;
+  display: grid; place-items: center; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: rgba(255, 255, 255, .92); color: var(--ink);
+  font-size: 1.35rem; line-height: 1;
+}
+.pop-close:hover { background: var(--clay-soft); border-color: var(--clay); color: var(--clay-deep); }
+@media (min-width: 760px) {
+  dialog.pick-pop[open] { grid-template-columns: 45% 1fr; align-items: stretch; }
+  .pick-pop .pop-figure { border-bottom: 0; border-right: 1px solid var(--line); }
+  .pick-pop .pop-figure img { max-height: none; height: 100%; }
+}

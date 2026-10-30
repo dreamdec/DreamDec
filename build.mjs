@@ -171,6 +171,32 @@ function statRow(items) {
   return `<div class="stat-row">${items.map((i) => `<span class="stat">${esc(i)}</span>`).join('')}</div>`;
 }
 
+// Pinterest pins link to the article with the pick's id as the fragment, so the
+// reader lands on one product rather than scrolling through eight looking for it.
+// The popup carries the two exits: buy now, or drop through to the full write-up.
+function pickModal(product, depth) {
+  const { award } = awardName(product);
+  const title = product.pick.title;
+  const href = amazonHref(product.pick.amazonUrl);
+  const spec = product.pick.spec;
+  return `<dialog class="pick-pop" id="pop-${esc(product.id)}" aria-labelledby="pop-t-${esc(product.id)}">
+  <button class="pop-close" type="button" aria-label="Close">&times;</button>
+  <div class="pop-figure"><img src="${up(depth)}${esc(product.pick.image)}" alt="${esc(title)}" loading="lazy" decoding="async"></div>
+  <div class="pop-body">
+    <span class="award-chip">${esc(award)}</span>
+    <h2 id="pop-t-${esc(product.id)}">${esc(title)}</h2>
+    ${spec ? `<p class="spec-line">${esc(spec)}</p>` : ''}
+    <p class="why">${esc(product.pick.verdict)}</p>
+    <div class="price-row">${product.pick.price ? `<span class="price">${esc(product.pick.price)}</span>` : '<span class="price-note">Price checked at time of writing, live total on Amazon</span>'}</div>
+    <div class="actions">
+      <a class="btn" href="${esc(href)}" rel="nofollow sponsored noopener" target="_blank">Shop on Amazon</a>
+      <button class="btn ghost pop-more" type="button">View more</button>
+    </div>
+    <p class="pop-fine">${esc(site.disclosureShort)} <a href="${up(depth)}disclosure/">Full disclosure</a></p>
+  </div>
+</dialog>`;
+}
+
 function compareTable(article) {
   const rows = article.slots.map((slot, i) => {
     const p = productBy[slot.id];
@@ -197,6 +223,7 @@ function articlePage(article, depth) {
   const cat = catBy[article.category];
   const done = article.slots.filter(filled).length;
   const criteria = article.howWeChose.map((c) => `<li>${esc(c)}</li>`).join('');
+  const pops = article.slots.filter(filled).map((s) => pickModal(productBy[s.id], depth)).join('\n');
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -220,7 +247,34 @@ ${disclosureAt(depth)}
 ${compareTable(article)}
 <h2>The picks</h2>
 ${article.slots.map((s, i) => pickCard(productBy[s.id], depth, i)).join('\n')}
-${done < article.slots.length ? `<div class="draft-flag"><strong>In progress — ${done} of ${article.slots.length} picks chosen.</strong> <span>The remaining slots are still being screened.</span></div>` : ''}`;
+${done < article.slots.length ? `<div class="draft-flag"><strong>In progress — ${done} of ${article.slots.length} picks chosen.</strong> <span>The remaining slots are still being screened.</span></div>` : ''}
+${pops}
+<script>
+(function () {
+  var pops = document.querySelectorAll('dialog.pick-pop');
+  var byTarget = {};
+  pops.forEach(function (d) {
+    var id = d.id.slice(4);
+    byTarget['#' + id] = d;
+    // Closing lands the reader on the write-up they skipped, whichever way they
+    // closed it - Esc, the backdrop, or View more.
+    d.addEventListener('close', function () {
+      var t = document.getElementById(id);
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+    d.querySelectorAll('.pop-close, .pop-more').forEach(function (b) {
+      b.addEventListener('click', function () { d.close(); });
+    });
+  });
+  function openForHash() {
+    var d = byTarget[location.hash];
+    if (d && !d.open) d.showModal();
+  }
+  window.addEventListener('hashchange', openForHash);
+  openForHash();
+})();
+</script>`;
   return { body, jsonLd };
 }
 

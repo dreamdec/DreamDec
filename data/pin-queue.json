@@ -1,5 +1,5 @@
 {
-  "$comment": "Publish order for the no-drill wall-shelf pins. One pin is posted per scheduled run, top to bottom, skipping anything already on the board. board is created on first run if PINTEREST_BOARD_ID is unset.",
+  "$comment": "Publish order for the no-drill wall-shelf pins. One pin is posted per scheduled run, top to bottom, skipping anything already on the board. board is created on first run if PINTEREST_BOARD_ID is unset. Single-product links carry the pick's id as the fragment, which opens that product's popup on the article.",
   "board": {
     "name": "Small Space Decor",
     "description": "Rent-safe storage and decor for small bedrooms. No drilling.",
@@ -10,64 +10,73 @@
       "id": "collage",
       "image": "collage.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/",
-      "title": "8 Damage-Free Shelves for a Rented Bedroom",
-      "note": "Eight shelves that work in a bedroom you do not own: adhesive strips, clear acrylic, an over-door rack, a tension pole that wedges floor to ceiling, and a caddy that clamps to the bed rail. Sizes and weight limits written out for each one. No drill for seven of the eight. Contains Amazon affiliate links."
+      "title": "8 Damage-Free Wall Shelves That Changed My Rental Room",
+      "note": "Renting means no drilling, so these eight solve the wall a different way: stick-on strips, clear acrylic that vanishes against a pale wall, a rack that hooks over the door, a pole shelf that wedges floor to ceiling, and two that hang from the bed rail. Sizes and real weight limits written out for every one, plus the single pick that needs one hole. Open the link for the full list and which one to skip. Contains Amazon affiliate links.",
+      "alt": "Collage of eight no-drill shelves with the headline 8 Damage-Free Wall Shelves That Changed My Rental Room"
     },
     {
       "id": "command-decor-metal-shelf",
       "image": "command-decor-metal-shelf.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#command-decor-metal-shelf",
-      "title": "Command Decor Metal Shelf - Sticks On, No Drill",
-      "note": "A small metal wall shelf that goes up with Command strips instead of a drill. 4.8 x 4.0 in, rated to 5 lb, strips included. The one pick whose weight rating is measured on your wall rather than guessed. Contains Amazon affiliate links."
+      "title": "3M Command Decor Metal Wall Shelf, 4.8 in Stick-On Shelf for Your Bedroom",
+      "note": "I stopped buying anything that needed a drill for a room I do not own. This is a 4.8 x 4.0 in metal shelf that goes up with the Command strips in the box, holds 5 lb, and peels off without leaving a mark. Small enough for sunglasses by the door or earrings by the bed, and it takes the things off the dresser. Size, rating and what the strip refills cost are at the link. Contains an Amazon affiliate link.",
+      "alt": "Small cream metal wall shelf shown in its packaging and loose, on a bedroom scene"
     },
     {
       "id": "loghot-bedside-caddy",
       "image": "loghot-bedside-caddy.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#loghot-bedside-caddy",
-      "title": "Bedside Caddy That Hangs on the Bed Rail",
-      "note": "Five compartments that hook over the bed rail: phone, meds, cables, remote and a drink, off the floor and out of the drawer. Fits a rail up to 1.97 in across; 14.6 x 4.7 in overall. Nothing sticks to your wall at all. Contains Amazon affiliate links."
+      "title": "Loghot Bedside Hanging Storage Caddy, 5 Pocket Organizer for Your Bed",
+      "note": "If your bed has a rail and no bedside table, your phone is living on the floor. This caddy hooks over that rail: five pockets for phone, meds, cables, remote and a drink, in a 14.6 x 4.7 in tray that sits at the side of the bed instead of taking one up. Fits a rail up to 1.97 in across and touches no wall at all. Pocket sizes and the rail fit are on the page at the link. Contains an Amazon affiliate link.",
+      "alt": "Grey fabric caddy with five pockets hanging from a metal bed rail beside linen pillows"
     },
     {
       "id": "yieach-acrylic-shelf-6-pack",
       "image": "yieach-acrylic-shelf-6-pack.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#yieach-acrylic-shelf-6-pack",
-      "title": "Six Clear Acrylic Shelves - Tape or Screw",
-      "note": "A six-pack of see-through wall shelves, 15 x 4.2 in each, that nearly vanish on a pale wall. Rated 3 lb on adhesive tape and 20 lb when screwed. The pick for a bedroom where you do not want to see the storage. Contains Amazon affiliate links."
+      "title": "Yieach 6 Pack 15 in Clear Acrylic Floating Shelves for Your Small Bedroom",
+      "note": "Tired of a wall shelf that takes over a small room? Six clear acrylic shelves, 15 x 4.2 in each, that nearly disappear against a pale wall. The tape holds 3 lb per shelf; screws take 20 lb if the landlord ever says yes. This is the pick when you want storage you can barely see rather than another box on the wall. Full sizing and the honest tape rating are one click away. Contains Amazon affiliate links.",
+      "alt": "Six see-through acrylic wall shelves holding bottles and small plants against a pale wall"
     },
     {
       "id": "jarlink-over-door-organizer",
       "image": "jarlink-over-door-organizer.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#jarlink-over-door-organizer",
-      "title": "Over-Door Rack: Storage With No Wall at All",
-      "note": "Five pockets and five mesh sides that hook over the top of a door, for bedrooms with no spare wall left. Doors up to 1.98 in thick; 44 lb stated by the listing. Zero contact with the wall, so nothing to patch. Contains Amazon affiliate links."
+      "title": "JARLINK Over the Door Organizer, 5 Shelf Storage Rack for Your Bedroom Door",
+      "note": "Your walls are already full, but the back of a door is doing nothing all day. Five pockets and five mesh sides hook straight over the top, so there is no wall contact and nothing to patch when you move. Fits a door up to 1.98 in thick and the listing states 44 lb. Shoes, toiletries, towels, the things that never get given a home. What will and will not fit is at the link. Contains an Amazon affiliate link.",
+      "alt": "Grey over-door storage rack with mesh pockets, shown hung on a door and standing empty"
     },
     {
       "id": "fayygyh-floating-shelf-pair",
       "image": "fayygyh-floating-shelf-pair.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#fayygyh-floating-shelf-pair",
-      "title": "Two Floating Shelves, Adhesive Tape Only",
-      "note": "The cheapest way into a wall shelf: two 4.7 x 8.6 in floating shelves that go up on adhesive tape, rated 4 lb per shelf. Good for a phone, a candle and a plant, not for a stack of books. Contains Amazon affiliate links."
+      "title": "FAYYGYH 2 Pack Damage-Free Floating Shelves for Your Dorm Room",
+      "note": "The cheapest way into a wall shelf, if all you need is a phone and a candle off the floor. Two 4.7 x 8.6 in shelves that go up on the adhesive tape supplied, no drill and no screws, so nothing to patch at the end of a lease. They are rated 4 lb a shelf, which does not make them a bookshelf, and you should know that before ordering rather than after. What they will hold is written out at the link. Contains an Amazon affiliate link.",
+      "alt": "Pair of small black tray floating shelves shown on a wall with the tape fixing"
     },
     {
       "id": "tension-pole-shelf",
       "image": "tension-pole-shelf.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#tension-pole-shelf",
-      "title": "Tension Pole Shelves - Floor to Ceiling, No Fixings",
-      "note": "Four tiers held up by nothing but pressure between floor and ceiling. Fits a 15.4 to 27.2 in wide gap and a 4 to 10 ft height, and touches no wall at all. The most shelf you can get without fixing anything. Contains Amazon affiliate links."
+      "title": "Adjustable Tension Pole Shelf, 4-Tier No-Drill Stand for Your Bedroom Corner",
+      "note": "Landlord says no holes? This one never touches the wall at all. Four tiers held up by pressure alone between floor and ceiling, widening from 15.4 to 27.2 in and rising anywhere from 4 to 10 ft, so an awkward corner stops being dead space. It is the most shelf you can put in a room without fixing anything, and it comes out again in ten minutes. The exact range and how it stands are at the link. Contains an Amazon affiliate link.",
+      "alt": "Four-tier white shelving held between floor and ceiling by two tension poles in a bright corner"
     },
     {
       "id": "value-tree-clamp-shelf",
       "image": "value-tree-clamp-shelf.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#value-tree-clamp-shelf",
-      "title": "Bedside Shelf That Clamps to the Bed Frame",
-      "note": "A 13 x 9.5 in tray that clamps onto the bed rail instead of the wall, for rooms with no bedside table. Clamps rails up to 2.9 in. Comes off when you move, and the wall never knew. Contains Amazon affiliate links."
+      "title": "Value Tree Clamp-On Bedside Shelf, 13 in Tray for Your Bunk or Dorm Bed",
+      "note": "A bedside table is usually the first thing a small room cannot afford. This is a 13 x 9.5 in tray that clamps onto the bed rail instead of the wall, no tools and no floor space taken, and it grips a rail up to 2.9 in thick so a dorm single or a metal frame both work. Book, lamp, water and phone end up within arm's reach. The listing publishes no load figure, so the link says what it is actually good for. Contains an Amazon affiliate link.",
+      "alt": "Black tray shelf clamped to the rail of a made bed, holding a phone and a book"
     },
     {
       "id": "vasagle-ladder-shelf",
       "image": "vasagle-ladder-shelf.png",
       "link": "https://dreamdec.pages.dev/bedrooms/no-drill-wall-shelves/#vasagle-ladder-shelf",
-      "title": "VASAGLE Ladder Shelf - The One You Do Anchor",
-      "note": "The exception in the list: four tiers, 22 x 13.6 in, 54.1 in tall, and it leans into the wall with the included anti-tip strap. That means one hole. Included because the storage is the best here and the trade-off is worth saying out loud. Contains Amazon affiliate links."
+      "title": "VASAGLE 4-Tier Ladder Shelf, 22 in Bookcase for Your Small Bedroom",
+      "note": "The one pick here that needs a drill, kept in the list because it holds more than the other seven put together and you should hear that from me before you order rather than after. Four tiers, 22 x 13.6 in, 54.1 in tall, leaning like a ladder with the included anti-tip strap into the wall. One hole, and whether it is worth it is your call to make. Every dimension and the trade-off are at the link. Contains an Amazon affiliate link.",
+      "alt": "Rustic brown and black four-tier ladder shelf leaning into a wall in a sunlit corner"
     }
   ]
 }
