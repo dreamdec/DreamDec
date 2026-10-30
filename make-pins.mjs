@@ -14,78 +14,136 @@ const H = 1500;
 const esc = (v) =>
   String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-// The eyebrow doubles as the Pinterest keyword line, so it stays search-y —
-// but it cannot claim "no drill" on the one pick that needs an anchor.
-const EYEBROW = 'No-drill bedroom storage';
-
 // Pin copy is written for the pin, not lifted from the article. The award phrases
 // ("Cheapest way in") and the spec strings are table voice, and a caveat like
 // "no load figure stated" is editorial hedging that belongs on the page.
 // Nothing here asserts a load rating the article does not already state.
+//
+// One entry per guide, and every guide is rendered in every run: the orphan sweep at
+// the bottom deletes any PNG a run did not produce, so rendering one guide alone
+// would erase the others.
+//
+// `eyebrow` doubles as the Pinterest keyword line, so it stays search-y — but a pick
+// that needs an anchor gets its own, so it never wears a "no-drill" label.
+//
 // House style is the card layout: the room is the background and a white card
 // holding the product photo fills most of the frame, popped over it. Only the
 // headline band and a margin of room stay open. `layout: 'placed'` on a pin
 // instead blends the product straight into the scene with multiply, which looks
-// better for the six picks shot on white but reads as a pasted rectangle for the
-// two whose listing photos are themselves styled room scenes.
-const LAYOUT = 'card';
+// better for picks shot on white but reads as a pasted rectangle for the ones whose
+// listing photos are themselves styled room scenes.
+//
+// `place` is only read by the placed layout: the cutout's top-left corner and width
+// as percentages of the 1000x1500 frame, tuned by eye against each scene.
+const GUIDES = [
+  {
+    slug: 'no-drill-wall-shelves',
+    // Delivered before a second guide existed, so it kept the unqualified name.
+    // Every collage since is namespaced, because two guides cannot both be collage.png.
+    collageFile: 'collage',
+    expect: 8,
+    eyebrow: 'No-drill bedroom storage',
+    collage: {
+      eyebrow: 'Renter-friendly bedroom',
+      line: '8 Damage-Free Wall Shelves<br>That Changed My Rental Room',
+      sub: 'No drill for 7 of the 8.',
+      scene: 'wall',
+    },
+    pins: {
+      'command-decor-metal-shelf': {
+        name: 'Command Décor metal shelf', chip: 'Adhesive strips', scene: 'wall',
+        // The listing photo is packaging above the loose shelf; only the shelf belongs on a wall.
+        place: { l: 52, t: 30, w: 42, crop: { t: 60 } },
+        line: 'A shelf that sticks, not screws', sub: 'Comes with the strips. Peels off without a mark.',
+      },
+      'yieach-acrylic-shelf-6-pack': {
+        name: 'Yieach clear acrylic set', chip: 'Tape or screws', scene: 'wall',
+        place: { l: 6, t: 32, w: 60 },
+        line: 'Six clear shelves that disappear', sub: 'See-through, so they vanish on a pale wall.',
+      },
+      'fayygyh-floating-shelf-pair': {
+        name: 'FAYYGYH floating pair', chip: 'Adhesive tape', scene: 'wall',
+        place: { l: 56, t: 33, w: 40 },
+        line: 'Two shelves. Tape only.', sub: 'The cheapest way into a wall shelf.',
+      },
+      'jarlink-over-door-organizer': {
+        name: 'JARLINK over-door rack', chip: 'Hooks over door', scene: 'door',
+        // The listing shows two racks: one already mounted on a wood door, which would
+        // paste a brown rectangle onto ours, and one bare. Keep the bare one.
+        place: { l: 12, t: 16, w: 55, crop: { l: 62, r: 1 } },
+        line: 'Storage that hangs on the door', sub: 'Uses the back of a door you already have.',
+      },
+      'tension-pole-shelf': {
+        name: 'Tension pole shelves', chip: 'No wall contact', scene: 'corner',
+        line: 'Floor to ceiling, nothing drilled', sub: 'Wedged tight between floor and ceiling.',
+      },
+      'vasagle-ladder-shelf': {
+        name: 'VASAGLE ladder shelf', chip: 'Leans + straps', scene: 'corner', eyebrow: 'Bedroom storage',
+        place: { l: 58, t: 30, w: 38 },
+        line: 'The one you do have to anchor', sub: 'Leans like a ladder, straps into the wall.',
+      },
+      'loghot-bedside-caddy': {
+        name: 'Loghot hanging caddy', chip: 'Hangs on rail', scene: 'bedside',
+        place: { l: 52, t: 54, w: 44, boost: 1.3 },
+        line: 'Everything beside the bed', sub: 'Phone, meds, cables and remote in one pocket.',
+      },
+      'value-tree-clamp-shelf': {
+        name: 'Value Tree clamp shelf', chip: 'Clamps on rail', scene: 'bedside',
+        line: 'Clamps on. No holes.', sub: 'Grips the bed rail instead of the wall.',
+      },
+    },
+  },
+  {
+    slug: 'narrow-desks-40-inch-wall',
+    collageFile: 'collage-desks',
+    expect: 6,
+    eyebrow: 'Desks for small bedrooms',
+    collage: {
+      eyebrow: 'Renter-friendly bedroom',
+      line: '6 Desks That Fit a 40-Inch Wall<br>And Changed My Rental Room',
+      sub: 'Five stand alone. One folds flat on the wall.',
+      scene: 'corner',
+      cell: 'stack',
+    },
+    pins: {
+      'compact-writing-desk-36': {
+        name: 'DAOUTIME 36 in writing desk', chip: 'Drawers + shelves', scene: 'corner',
+        line: 'Two drawers. Two shelves. 35 in.',
+        sub: 'The charger lives in a drawer, so the top stays clear.',
+      },
+      'fold-down-wall-desk': {
+        name: 'DAZIMOU fold-down desk', chip: 'Screws into the wall', scene: 'wall',
+        eyebrow: 'Wall-mounted folding desk',
+        line: 'The desk that folds flat', sub: '22.8 in deep when you sit at it. Gone when you stand up.',
+      },
+      'small-corner-desk': {
+        name: 'SEDETA corner desk', chip: 'Fills the corner', scene: 'corner',
+        line: 'The corner was wasted floor', sub: 'A triangular top turns two dead walls into a desk.',
+      },
+      'rolling-writing-table': {
+        name: 'AHB rolling desk', chip: 'Casters, two lock', scene: 'wall',
+        line: 'Roll it out of the way', sub: '39 in of desktop on wheels. 2 of the 4 lock.',
+      },
+      'slim-standing-desk': {
+        name: 'Claiks standing desk', chip: 'Electric sit-stand', scene: 'wall',
+        line: 'Sit-stand, 32 inches wide', sub: '28.3 to 46.5 in tall, with three saved heights.',
+      },
+      'console-table-desk': {
+        name: 'Simple Trending console', chip: 'Laptop-width top', scene: 'door',
+        line: 'A desk that reads as furniture', sub: '10.5 in deep - a laptop only, and that is the trade.',
+      },
+    },
+  },
+];
 
-// `place` is the cutout's top-left corner and its width, as percentages of the
-// 1000x1500 frame. Tuned by eye against each scene: wall shelves sit on the bare
-// wall above the sideboard, the rack on the door face, the bed pieces at rail height.
-const PINS = {
-  'command-decor-metal-shelf': {
-    name: 'Command Décor metal shelf', chip: 'Adhesive strips', scene: 'wall',
-    // The listing photo is packaging above the loose shelf; only the shelf belongs on a wall.
-    place: { l: 52, t: 30, w: 42, crop: { t: 60 } },
-    line: 'A shelf that sticks, not screws', sub: 'Comes with the strips. Peels off without a mark.',
-  },
-  'yieach-acrylic-shelf-6-pack': {
-    name: 'Yieach clear acrylic set', chip: 'Tape or screws', scene: 'wall',
-    place: { l: 6, t: 32, w: 60 },
-    line: 'Six clear shelves that disappear', sub: 'See-through, so they vanish on a pale wall.',
-  },
-  'fayygyh-floating-shelf-pair': {
-    name: 'FAYYGYH floating pair', chip: 'Adhesive tape', scene: 'wall',
-    place: { l: 56, t: 33, w: 40 },
-    line: 'Two shelves. Tape only.', sub: 'The cheapest way into a wall shelf.',
-  },
-  'jarlink-over-door-organizer': {
-    name: 'JARLINK over-door rack', chip: 'Hooks over door', scene: 'door',
-    // The listing shows two racks: one already mounted on a wood door, which would
-    // paste a brown rectangle onto ours, and one bare. Keep the bare one.
-    place: { l: 12, t: 16, w: 55, crop: { l: 62, r: 1 } },
-    line: 'Storage that hangs on the door', sub: 'Uses the back of a door you already have.',
-  },
-  'tension-pole-shelf': {
-    name: 'Tension pole shelves', chip: 'No wall contact', scene: 'corner',
-    line: 'Floor to ceiling, nothing drilled', sub: 'Wedged tight between floor and ceiling.',
-  },
-  'vasagle-ladder-shelf': {
-    name: 'VASAGLE ladder shelf', chip: 'Leans + straps', scene: 'corner', eyebrow: 'Bedroom storage',
-    place: { l: 58, t: 30, w: 38 },
-    line: 'The one you do have to anchor', sub: 'Leans like a ladder, straps into the wall.',
-  },
-  'loghot-bedside-caddy': {
-    name: 'Loghot hanging caddy', chip: 'Hangs on rail', scene: 'bedside',
-    place: { l: 52, t: 54, w: 44, boost: 1.3 },
-    line: 'Everything beside the bed', sub: 'Phone, meds, cables and remote in one pocket.',
-  },
-  'value-tree-clamp-shelf': {
-    name: 'Value Tree clamp shelf', chip: 'Clamps on rail', scene: 'bedside',
-    line: 'Clamps on. No holes.', sub: 'Grips the bed rail instead of the wall.',
-  },
-};
 
 // The article's spec strings carry a "no load figure stated" hedge. True on the
 // page where it reads as a caveat; on a pin it reads as a red flag.
 const pinSpec = (spec) => spec.replace(/\s*·\s*no load figure stated/i, '');
 
-const COLLAGE = {
-  line: '8 Damage-Free Wall Shelves<br>That Changed My Rental Room',
-  sub: 'No drill for 7 of the 8.',
-  scene: 'wall',
-};
+// Every pin in the house style. A pin can opt into 'placed' for the shot-on-white
+// listings where blending the backdrop reads better than a card.
+const LAYOUT = 'card';
 
 const fileUrl = (p) => `file:///${String(p).replace(/\\/g, '/').replace(/^([A-Za-z]):/, '$1:')}`;
 const sceneUrl = (name) => fileUrl(path.join(BG_DIR, `scene-${name}.png`));
@@ -157,8 +215,12 @@ function page(css, body) {
 </head><body>${body}</body></html>`;
 }
 
-function productPin(slot) {
-  const { name, line, sub, chip, scene, place, layout } = PINS[slot.id];
+// A pick that cannot wear the guide's keyword - the shelf that needs an anchor, the
+// desk that screws into the wall - overrides `eyebrow` on its own pin.
+const eyebrowFor = (guide, slot) => guide.pins[slot.id].eyebrow ?? guide.eyebrow;
+
+function productPin(guide, slot) {
+  const { name, line, sub, chip, scene, place, layout } = guide.pins[slot.id];
   const img = fileUrl(path.join(HERE, 'src', slot.pick.image));
   const clip = place?.crop
     ? `clip-path: inset(${place.crop.t ?? 0}% ${place.crop.r ?? 0}% ${place.crop.b ?? 0}% ${place.crop.l ?? 0}%);`
@@ -169,7 +231,7 @@ function productPin(slot) {
   // product itself.
   const boost = place?.boost ?? 1.12;
   const copy = `
-      <div class="eyebrow">${esc(PINS[slot.id].eyebrow ?? EYEBROW)}<span class="rule"></span></div>
+      <div class="eyebrow">${esc(eyebrowFor(guide, slot))}<span class="rule"></span></div>
       <h1 class="display">${esc(line)}</h1>
       <p class="sub">${esc(sub)}</p>`;
   const foot = `
@@ -246,37 +308,44 @@ const CARD_CSS = `
   .txt .chip { flex: 0 0 auto; align-self: flex-end; }
 `;
 
-function collagePin(slots) {
+function collagePin(guide, slots) {
+  const { line, sub, scene, eyebrow } = guide.collage;
   const tiles = slots.map((s) => `
       <div class="cell">
         <div class="shot"><img src="${fileUrl(path.join(HERE, 'src', s.pick.image))}" alt=""></div>
         <div class="txt">
-          <p class="label">${esc(PINS[s.id].name)}</p>
-          <p class="how">${esc(PINS[s.id].chip)}</p>
+          <p class="label">${esc(guide.pins[s.id].name)}</p>
+          <p class="how">${esc(guide.pins[s.id].chip)}</p>
         </div>
       </div>`).join('');
   const body = `
-    <div class="pin" style="--bg:url('${sceneUrl(COLLAGE.scene)}')">
+    <div class="pin" style="--bg:url('${sceneUrl(scene)}')">
       <div class="scrim"></div>
-      <div class="eyebrow">Renter-friendly bedroom<span class="rule"></span></div>
-      <h1 class="display">${COLLAGE.line}</h1>
-      <p class="sub">${esc(COLLAGE.sub)}</p>
+      <div class="eyebrow">${esc(eyebrow)}<span class="rule"></span></div>
+      <h1 class="display">${line}</h1>
+      <p class="sub">${esc(sub)}</p>
       <div class="grid">${tiles}</div>
       <div class="foot">
         <div class="mark"><img src="${fileUrl(path.join(HERE, 'src', 'icon.svg'))}" alt=""><span class="word display">Dream<span>Dec</span></span></div>
         <p class="site"><b>dreamdec.pages.dev</b>Contains Amazon affiliate links</p>
       </div>
     </div>`;
+  const rows = Math.ceil(slots.length / 2);
+  // Two cell shapes, because the grid is only ever two tiles wide. Eight picks make
+  // short rows that a thumbnail has to sit beside; six make tall rows where the same
+  // 128px square leaves the bottom two thirds of the card empty, so the photo goes on
+  // top and grows into the cell instead.
+  const stacked = guide.collage.cell === 'stack';
   const css = `
     h1 { font-size: 54px; line-height: 1.06; letter-spacing: -.022em; margin: 14px 0 0; }
     .sub { margin: 12px 0 20px; font-size: 25px; font-weight: 700; color: var(--clay-deep); letter-spacing: .01em; }
-    .grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); gap: 14px; min-height: 0; }
-    .cell { background: rgba(255,255,255,.95); border: 2px solid var(--line); border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 12px; min-height: 0; }
-    .shot { flex: 0 0 128px; width: 128px; height: 128px; display: flex; align-items: center; justify-content: center; }
+    .grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(${rows}, 1fr); gap: 14px; min-height: 0; }
+    .cell { background: rgba(255,255,255,.95); border: 2px solid var(--line); border-radius: 16px; padding: 12px; display: flex; ${stacked ? 'flex-direction: column; gap: 10px;' : 'align-items: center; gap: 12px;'} min-height: 0; }
+    .shot ${stacked ? '{ flex: 1 1 auto; min-height: 0; width: 100%;' : '{ flex: 0 0 128px; width: 128px; height: 128px;'} display: flex; align-items: center; justify-content: center; }
     .shot img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-    .txt { flex: 1; min-width: 0; }
-    .label { font: 600 23px/1.16 'Fraunces', serif; letter-spacing: -.01em; }
-    .how { margin-top: 5px; font: 700 15px/1.2 'Karla', sans-serif; text-transform: uppercase; letter-spacing: .05em; color: var(--clay-deep); }
+    .txt { ${stacked ? 'flex: 0 0 auto; text-align: center;' : 'flex: 1; min-width: 0;'} }
+    .label { font: 600 ${stacked ? '26px/1.14' : '23px/1.16'} 'Fraunces', serif; letter-spacing: -.01em; }
+    .how { margin-top: 5px; font: 700 ${stacked ? '16px' : '15px'}/1.2 'Karla', sans-serif; text-transform: uppercase; letter-spacing: .05em; color: var(--clay-deep); }
   `;
   return page(css, body);
 }
@@ -284,17 +353,23 @@ function collagePin(slots) {
 fs.mkdirSync(PIN_DIR, { recursive: true });
 fs.mkdirSync(WORK, { recursive: true });
 
-const article = JSON.parse(fs.readFileSync(path.join(HERE, 'data', 'articles.json'), 'utf8'))
-  .articles.find((a) => a.slug === 'no-drill-wall-shelves');
-const filled = article.slots.filter((s) => s.pick?.image && s.pick?.amazonUrl);
-if (filled.length !== 8) throw new Error(`expected 8 filled shelf picks, found ${filled.length}`);
-for (const slot of filled) if (!PINS[slot.id]) throw new Error(`no pin copy for slot ${slot.id}`);
-for (const name of Object.values(PINS).map((p) => p.scene).concat(COLLAGE.scene)) {
-  if (!fs.existsSync(path.join(BG_DIR, `scene-${name}.png`))) throw new Error(`missing backdrop scene-${name}.png`);
-}
+const articles = JSON.parse(fs.readFileSync(path.join(HERE, 'data', 'articles.json'), 'utf8')).articles;
+const jobs = [];
 
-const jobs = filled.map((slot) => ({ name: slot.id, html: productPin(slot) }));
-jobs.push({ name: 'collage', html: collagePin(filled) });
+for (const guide of GUIDES) {
+  const article = articles.find((a) => a.slug === guide.slug);
+  if (!article) throw new Error(`no article with slug ${guide.slug}`);
+  const filled = article.slots.filter((s) => s.pick?.image && s.pick?.amazonUrl);
+  if (filled.length !== guide.expect) {
+    throw new Error(`${guide.slug}: expected ${guide.expect} filled picks, found ${filled.length}`);
+  }
+  for (const slot of filled) if (!guide.pins[slot.id]) throw new Error(`no pin copy for slot ${slot.id}`);
+  for (const name of Object.values(guide.pins).map((p) => p.scene).concat(guide.collage.scene)) {
+    if (!fs.existsSync(path.join(BG_DIR, `scene-${name}.png`))) throw new Error(`missing backdrop scene-${name}.png`);
+  }
+  for (const slot of filled) jobs.push({ name: slot.id, html: productPin(guide, slot) });
+  jobs.push({ name: guide.collageFile, html: collagePin(guide, filled) });
+}
 
 for (const job of jobs) {
   const htmlPath = path.join(WORK, `${job.name}.html`);

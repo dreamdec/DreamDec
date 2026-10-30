@@ -409,7 +409,7 @@
       "slug": "narrow-desks-40-inch-wall",
       "category": "study",
       "status": "slotting",
-      "updated": "2026-10-28",
+      "updated": "2026-10-30",
       "title": "6 Desks That Fit a 40-Inch Wall and Still Take a Real Laptop",
       "subtitle": "Measured by footprint and depth, because width is the number every listing leads with.",
       "metaDescription": "Six genuinely small desks that fit a 40-inch wall in a rented bedroom - compact writing desks, a fold-down wall unit, a corner option, a rolling table and a slim standing desk.",
@@ -417,157 +417,163 @@
       "pinDescription": "Working from a rented bedroom? These 6 desks fit a 40-inch wall and still hold a laptop plus a notebook. Affiliate links.",
       "intro": [
         "A desk listing tells you the width and never the depth, and depth is what decides whether it works. Thirty-six inches wide at 14 inches deep is a shelf you happen to sit at; thirty-six inches at 20 inches deep is a desk.",
-        "So this list is sorted by footprint, with a hard rule: a laptop open at working depth plus one thing beside it - a notebook, a mug, a lamp. If the desk cannot hold both, it did not make the list, whatever the width claim says.",
-        "None of these need to be fixed to a wall except the fold-down, and that one is here because in some rooms it is the only honest answer."
+        "So these six are sorted by footprint, and every measurement comes from the listing itself. Five are desks you can sit at properly. The sixth is ten and a half inches deep and is here because a narrow console reads as furniture in a bedroom where a desk would look wrong - it is named as the exception, not sold as a desk.",
+        "None of them need a tradesperson. The fold-down is the only one that needs a hole in the wall, and it is here because in a room with no spare floor it is the only honest answer. Where a listing contradicts itself - and four of these six do - both numbers are printed instead of the prettier one."
       ],
       "howWeChose": [
-        "40 in wide or less, with the depth published",
-        "At least 16 in deep for anything you sit at for more than an hour",
-        "Assembly that a renter with no tools can finish in under 45 minutes",
-        "Stable at a typing depth - the wobble test is the most common one-star complaint in this category",
-        "4.3 stars or higher with enough reviews to mean it"
+        "40 in wide or less, as the listing titles it and as its own specification table gives it",
+        "A published depth, because width is the number every listing leads with and the one that never tells you whether you can work at it",
+        "Deep enough to type on with a laptop open - the 10.5 in console stays in the list as the exception, and says so in its own entry",
+        "No tradesperson anywhere in the list: five stand on their own feet, the sixth screws into the wall and is labelled for it",
+        "The listing publishes its own numbers. No price, star rating or load figure appears here unless Amazon prints it on the page"
       ],
       "slots": [
         {
           "id": "compact-writing-desk-36",
-          "draftHeading": "Best all-round: 36 in writing desk with a drawer",
-          "type": "Compact wooden writing desk, 32-36 in wide",
+          "draftHeading": "Best all-round: 36 in writing desk with drawers",
+          "type": "Writing desk with drawers, 35.4 in wide",
           "lookingFor": {
-            "priceBand": "$90-$160",
-            "minRating": "4.3",
             "constraints": [
-              "16-20 in deep",
-              "at least one drawer",
-              "no particle-board shelf sagging under a laptop"
-            ]
+              "35.4 in wide, so a 40-inch wall keeps four inches spare",
+              "drawers and shelves included, because a clear top is what makes a small desk usable",
+              "stands on its own feet - no wall fixing"
+            ],
+            "minRating": null
           },
           "whyItMatters": "The default for a bedroom corner, and the category where the reviews tell you everything: cheap ones wobble at the keyboard joint within a year. A drawer matters disproportionately - it is where the charger and cables live, which is what makes the desktop stay clear.",
           "pick": {
-            "title": null,
-            "amazonUrl": null,
+            "title": "DAOUTIME 36 Inch Small Computer Desk with Drawers and Storage Shelves",
+            "amazonUrl": "https://www.amazon.com/dp/B0DS8D1273?tag=dreamdec-20",
             "price": null,
-            "spec": null,
-            "image": null,
-            "verdict": null
-          }
+            "spec": "35.4 × 15.7 × 30.4 in · 2 drawers + 2 shelves",
+            "image": "compact-writing-desk-36.jpg",
+            "verdict": "The only pick here with somewhere to put things: two fabric drawers and two shelves that fit on the left or the right, which is what keeps a shallow top clear. The listing prints its own depth twice - 15.75 in in the spec table, 15.94 in in the description - and neither is generous, so this is a laptop and a notebook, not a laptop and a lamp. Metal frame with an X-brace at the back, adjustable feet, thirty minutes to build.",
+            "needs": "No load figure published. Confirm drawer interiors and which depth is right before quoting either."
+          },
+          "mount": "Freestanding"
         },
         {
           "id": "fold-down-wall-desk",
           "draftHeading": "Disappears entirely: fold-down wall desk",
-          "type": "Wall-mounted drop-leaf desk, closed",
+          "type": "Wall-mounted folding desk, 31 × 22.8 in open",
           "lookingFor": {
-            "priceBand": "$70-$130",
-            "minRating": "4.3",
             "constraints": [
-              "under 20 in wide closed",
-              "holds 30 lb+ open",
-              "requires fixing - say so plainly"
-            ]
+              "22.8 in deep open - the most working room in this list",
+              "folds up on a button, so the floor comes back",
+              "one honest catch: it has to be fixed to the wall"
+            ],
+            "minRating": null
           },
           "whyItMatters": "For a room where the desk has to be gone at night, this is the only option that is actually true rather than a compromise. It also breaks our own no-drilling rule, so we flag that in the copy instead of burying it - it is a landlord conversation, not a purchase.",
           "pick": {
-            "title": null,
-            "amazonUrl": null,
+            "title": "DAZIMOU Wall Mounted Folding Desk, 31 x 22.8 in, Grey",
+            "amazonUrl": "https://www.amazon.com/dp/B0CZN44RTB?tag=dreamdec-20",
             "price": null,
-            "spec": null,
-            "image": null,
-            "verdict": null
-          }
+            "spec": "31 × 22.8 in board · folds up on a button · wall fixing",
+            "image": "fold-down-wall-desk.jpg",
+            "verdict": "The deepest working surface in the list at 22.8 in, and the only one that gives the floor back: the bracket locks at ninety degrees and releases on a button. Two things the listing will not settle. It publishes no load figure - good load-bearing capacity is the entire claim - and the 8.2 in in its dimensions field is the folded profile, not a height you sit at. It also screws into the wall, and the hardware is not itemised.",
+            "needs": "Hardware contents, anchors for the wall type, and a real load figure are all unconfirmed by the listing."
+          },
+          "mount": "Screwed into the wall"
         },
         {
           "id": "small-corner-desk",
-          "draftHeading": "Uses the corner: small angular corner desk",
-          "type": "Compact corner desk, under 40 in per side",
+          "draftHeading": "Uses the corner: 31.5 in triangular desk",
+          "type": "Triangular corner desk, 31.5 in per side",
           "lookingFor": {
-            "priceBand": "$100-$180",
-            "minRating": "4.3",
             "constraints": [
-              "both sides 40 in or less",
-              "16 in+ at the working point",
-              "fits a 90-degree corner with skirting clearance"
-            ]
+              "triangular top, so the depth comes from the corner instead of the wall",
+              "31.5 in per side as titled - the description separately claims 44.5 in, which is flagged below",
+              "one drawer, because corner desks usually have nowhere for a charger"
+            ],
+            "minRating": null
           },
           "whyItMatters": "A corner is the one floor space a small bedroom is usually wasting, and an angular desk turns it into a working depth you cannot get from a straight desk in the same footprint. Skirting boards are what stop people installing these, so the back cut-out matters.",
           "pick": {
-            "title": null,
-            "amazonUrl": null,
+            "title": "SEDETA Farmhouse Corner Desk for Small Space, 31.5 in, with Drawer",
+            "amazonUrl": "https://www.amazon.com/dp/B0GQH2LSBW?tag=dreamdec-20",
             "price": null,
-            "spec": null,
-            "image": null,
-            "verdict": null
-          }
+            "spec": "31.5 × 31.5 × 31.5 in · 1 drawer + corner shelves",
+            "image": "small-corner-desk.jpg",
+            "verdict": "A corner is the floor a small bedroom usually wastes, and this triangular top turns two dead walls into working depth, with one drawer and open shelves underneath. The listing contradicts itself on size: title and spec table say 31.5 in, the description says 44.5 in, and only one of those fits a 40-inch wall. The photo is brown while the title says white. No skirting-board cut-out is mentioned, which is what stops a corner desk sitting flat.",
+            "needs": "Width (31.5 vs 44.5 in), colour variant and usable top depth at the working point are all unresolved in the listing."
+          },
+          "mount": "Freestanding"
         },
         {
           "id": "rolling-writing-table",
-          "draftHeading": "Moves when you need the floor: rolling writing table",
-          "type": "Lockable-caster writing table, narrow",
+          "draftHeading": "Moves when you need the floor: rolling desk",
+          "type": "Rolling writing table, 39 in wide",
           "lookingFor": {
-            "priceBand": "$60-$110",
-            "minRating": "4.4",
             "constraints": [
-              "under 18 in deep",
-              "casters with locks",
-              "height 28-30 in"
-            ]
+              "39 × 20 in - under a 40-inch wall with real depth to type on",
+              "two locking casters, which is the difference between a desk and furniture that creeps away as you type",
+              "30 in high, so an ordinary chair works"
+            ],
+            "minRating": null
           },
           "whyItMatters": "Not a permanent desk - a desk you can roll out of the way, which in a single room is the difference between having somewhere to work and having to work on the bed. Locking casters are the whole difference between this and a piece of furniture that creeps away as you type.",
           "pick": {
-            "title": null,
-            "amazonUrl": null,
+            "title": "AHB 39 in Rolling Computer Desk with Locking Casters and Storage Bag",
+            "amazonUrl": "https://www.amazon.com/dp/B09WH4RPXL?tag=dreamdec-20",
             "price": null,
-            "spec": null,
-            "image": null,
-            "verdict": null
-          }
+            "spec": "39 × 20 × 30 in · 330 lb · 2 of 4 casters lock",
+            "image": "rolling-writing-table.jpg",
+            "verdict": "The widest here at 39 in, the only one with a load figure worth reading at 330 lb, and the one you roll out of the way when you need the floor. Twenty inches deep at 30 in high, so a real keyboard and an ordinary chair both fit. Four casters, two of which lock, and the listing never says which pair - put the locking ones at the back, where your weight pushes. A fabric bag and three hooks replace the drawer it has no room for.",
+            "needs": "Which two casters lock is not stated; 330 lb is the whole desk, not a top-only rating."
+          },
+          "mount": "Casters, two lock"
         },
         {
-          "id": "slim-standing-desk-36",
-          "draftHeading": "Sit-stand in a small room: slim standing desk",
-          "type": "Electric height-adjustable desk, 36-40 in wide",
+          "id": "slim-standing-desk",
+          "draftHeading": "Sit-stand in a small room: 32 in electric desk",
+          "type": "Electric height-adjustable desk, 32 in wide",
           "lookingFor": {
-            "priceBand": "$180-$300",
-            "minRating": "4.3",
             "constraints": [
-              "40 in wide or less",
-              "depth 20 in+",
-              "single-motor is fine at this size",
-              "cable tray"
-            ]
+              "32 × 19 in top - a sit-stand frame small enough for a bedroom wall",
+              "28.3 to 46.5 in of travel with three saved presets",
+              "rated to 156 lb, which covers a monitor and a laptop"
+            ],
+            "minRating": null
           },
           "whyItMatters": "The highest price in the list, and the one a reader will spend weeks on. Two things decide it in a bedroom: how loud the motor is at 11 pm, and whether the frame fits a 36-inch gap with the legs at the outermost holes.",
           "pick": {
-            "title": null,
-            "amazonUrl": null,
+            "title": "Claiks Electric Standing Desk, 32 x 19 in, Height Adjustable, Black",
+            "amazonUrl": "https://www.amazon.com/dp/B0H45TV33J?tag=dreamdec-20",
             "price": null,
-            "spec": null,
-            "image": null,
-            "verdict": null
-          }
+            "spec": "32 × 19 in top · 28.3-46.5 in tall · 156 lb",
+            "image": "slim-standing-desk.jpg",
+            "verdict": "The one that changes height: 28.3 to 46.5 in on an electric motor with three saved presets, under a 32 × 19 in top that takes a laptop, a keyboard and a mug, and not much else. Rated to 156 lb. Two gaps in the listing matter most in a bedroom - it is described as ultra-quiet but publishes no decibel figure, and what is included is a cable hub rather than a tray. The T-shaped feet are the widest part of it, so measure the gap you are dropping it into.",
+            "needs": "Motor noise in dB, single or dual motor, and leg retraction width are all unpublished."
+          },
+          "mount": "Freestanding"
         },
         {
           "id": "console-table-desk",
-          "draftHeading": "Looks like furniture, not office gear: narrow console table",
-          "type": "Console table used as a desk, 16 in deep",
+          "draftHeading": "Looks like furniture: narrow console table",
+          "type": "Narrow console table used as a desk, 10.5 in deep",
           "lookingFor": {
-            "priceBand": "$90-$150",
-            "minRating": "4.3",
             "constraints": [
-              "16-18 in deep",
-              "40 in wide or less",
-              "no knee-blocking lower shelf"
-            ]
+              "10.5 in deep - a laptop only, and the shallowest thing here by five inches",
+              "reads as a hall table rather than office furniture",
+              "adjustable feet, which matters more on a shallow table than a deep one"
+            ],
+            "minRating": null
           },
           "whyItMatters": "For someone who does not want their bedroom to look like an office, a console is a desk that reads as decor the rest of the day. The trap is a lower shelf that stops your knees, which is exactly what a lot of the cheap ones have.",
           "pick": {
-            "title": null,
-            "amazonUrl": null,
+            "title": "Simple Trending 32 in Narrow Console Table with Storage Shelf",
+            "amazonUrl": "https://www.amazon.com/dp/B0FRMPT7M3?tag=dreamdec-20",
             "price": null,
-            "spec": null,
-            "image": null,
-            "verdict": null
-          }
+            "spec": "32 × 10.5 × 30.5 in · 50 lb · 1 lower mesh shelf",
+            "image": "console-table-desk.jpg",
+            "verdict": "The exception, and it is in the list as one: at 10.5 in deep a laptop fills the top, so nothing sits beside it. What that buys is a table that reads as furniture rather than office gear in a room where a desk would look wrong. The listing gives a 50 lb maximum without naming the surface it applies to, and calls the frame both wood and metal in the same page. At least the mesh shelf sits low by the floor, not where your knees go.",
+            "needs": "The 50 lb figure does not say which surface it rates; shelf-to-top clearance is unpublished."
+          },
+          "mount": "Freestanding"
         }
-      ]
+      ],
+      "pinFolder": "6 Desks That Fit a 40-Inch Wall"
     },
     {
       "slug": "no-wire-desk-lamps",
