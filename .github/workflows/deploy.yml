@@ -1,15 +1,17 @@
 name: Deploy
 
+# Manual only, on purpose. GitHub is a backup of the source, not part of
+# publishing: dreamdec.pages.dev is updated from this machine with wrangler.
+# A push trigger here could only ever fail (no Cloudflare credentials on the
+# account), and it emailed a failure for every single push.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
   deployments: write
 
-# Two pushes in a row would otherwise race, and the loser could land last.
+# Two runs at once would race, and the loser could land last.
 concurrency:
   group: pages-deploy
   cancel-in-progress: false
